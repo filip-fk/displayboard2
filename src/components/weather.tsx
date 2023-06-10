@@ -18,11 +18,7 @@ function Weather() {
 
     //runs only on first render
     useEffect(() => {
-        var x = 'https://www.meteoswiss.admin.ch/product/output/versions.json';
-            import(x).then((a) => {
-                a.json()
-                console.log(a.keys())
-            });
+        
     }, []);
 
     //runs periodically every 50seconds (not on first render)
@@ -32,12 +28,7 @@ function Weather() {
 
             //import * as versions from 'https://www.meteoswiss.admin.ch/product/output/versions.json';
 
-            var x = 'https://www.meteoswiss.admin.ch/product/output/versions.json';
-            import(x).then((a) => {
-                a.json()
-                console.log(a.keys())
-            });
-
+            
         }, 300000); //every 5mins
         return () => clearInterval(interval); //unmount to prevent memory leaks.
     }, [])
