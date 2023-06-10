@@ -1,10 +1,9 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client'
-import App from './routes/App.tsx'
-import Root from "./routes/root"
-import SBB from "./components/sbb.tsx"
-import ErrorPage from "./routes/error-page.tsx";
+import App from './routes/App'
+import SBB from "./routes/sbb"
+import ErrorPage from "./routes/error-page";
 import './styles/index.css'
 
 import {

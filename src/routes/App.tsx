@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AppShell,
   Navbar,
@@ -14,20 +14,25 @@ import {
   MantineProvider, ColorSchemeProvider, ColorScheme,
   Group,
   ActionIcon,
+  Box,
+  ScrollArea,
+  Button,
+  Stack,
 } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
-import { useColorScheme } from '@mantine/hooks';
+import { useColorScheme, useFullscreen } from '@mantine/hooks';
 
 
 
-import SBB from '../components/sbb'
+import SBB from '../components/sbb-times'
 import { Logo } from '../components/logo'
-import { MainLinks } from '../components/mainlinks'
+import MainLinks from '../components/mainlinks'
 import { User } from '../components/user'
 
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import '../styles/App.css'
+import Weather from '../components/weather';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -60,17 +65,34 @@ function App() {
   //   </>
   // )
 
+  //color mngmt
   const colorScheme_ = useColorScheme();
   const [colorScheme, setColorScheme] = useState<ColorScheme>(colorScheme_);
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme_ === 'dark' ? 'light' : 'dark'));
-  
+
   const theme = useMantineTheme();
+
+  //mobile
   const [opened, setOpened] = useState(false);
+
+  //fullscren
+  const { ref, toggle, fullscreen } = useFullscreen();
+
+  //time
+  const [now_, setNow_] = useState(new Date());
+  const [show_dots, setShow_dots] = useState(true)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShow_dots((show_dots) => !show_dots)
+      setNow_(new Date());
+    }, 500);
+    return () => clearInterval(interval); //unmount to prevent memory leaks.
+  }, [])
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme_} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme:colorScheme_ }} withGlobalStyles withNormalizeCSS>
+      <MantineProvider theme={{ colorScheme: colorScheme_ }} withGlobalStyles withNormalizeCSS>
         <AppShell
           styles={{
             root: {
@@ -81,15 +103,18 @@ function App() {
           navbarOffsetBreakpoint="sm"
           asideOffsetBreakpoint="sm"
           navbar={
-            <Navbar p="xs" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+            <Navbar p="xs" hiddenBreakpoint={3000} hidden={!opened}>
               {/* <Navbar height={600} p="xs" width={{ base: 300 }}> */}
-      
-      <Navbar.Section grow mt={0}>
-        <MainLinks />
-      </Navbar.Section>
-      <Navbar.Section>
-        <User />
-      </Navbar.Section>
+
+              <Navbar.Section grow mt={0}>
+                <MainLinks />
+              </Navbar.Section>
+              <Navbar.Section>
+                <Button onClick={toggle} variant='subtle' color={fullscreen ? 'red' : 'blue'}>
+                  {fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+                </Button>
+                <User />
+              </Navbar.Section>
             </Navbar>
           }
           // aside={
@@ -105,31 +130,43 @@ function App() {
           //   </Footer>
           // }
           header={
-            <Header height={{ base: 50, md: 70 }} p="md">
-              <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                  <Burger
-                    opened={opened}
-                    onClick={() => setOpened((o) => !o)}
-                    size="sm"
-                    //color={theme.colors.gray[6]}
-                    mr="xl"
-                  />
-                </MediaQuery>
+            <Header height={{ base: 50 }} p="sm">
+              <Group position='apart'>
+                <Group spacing={0}>
+                  <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                    <Burger
+                      opened={opened}
+                      onClick={() => setOpened((o) => !o)}
+                      size="sm"
+                      //color={theme.colors.gray[6]}
+                      ml="xs"
+                      mr="lg"
+                    />
+                  </MediaQuery>
 
-                <Group sx={{ height: '100%' }} px={0} position="apart">
-                  <Logo colorScheme={colorScheme_} />
-                  {/* <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
+                  <Group sx={{ height: '100%' }} px={0} position="apart">
+                    <Logo colorScheme={colorScheme_} />
+                    {/* <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
                     {colorScheme_ === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
                   </ActionIcon> */}
+                  </Group>
                 </Group>
-              </div>
+                <Group spacing={2}>
+                  <Text fw={600}>{now_.getHours()}</Text>
+                  <Text color={show_dots ? 'yellow.4' : 'yellow.0'}>:</Text>
+                  <Text fw={600}>{now_.getMinutes()}</Text>
+                </Group>
+              </Group>
             </Header>
           }
         >
-          <Grid>
-            <Grid.Col md={6} lg="auto">span=auto</Grid.Col>
-            <Grid.Col md={6} lg={3}><SBB /></Grid.Col>
+          <Grid >
+            <Grid.Col lg={6} xl="auto">
+              <Weather />
+            </Grid.Col>
+            <Grid.Col lg={6} xl={3}>
+              <SBB />
+            </Grid.Col>
           </Grid>
         </AppShell>
       </MantineProvider>

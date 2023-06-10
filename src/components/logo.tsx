@@ -3,8 +3,8 @@ import { ColorScheme, rem } from '@mantine/core';
 
 export function Logo({ colorScheme }: { colorScheme: ColorScheme }) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" overflow="hidden">
-            <g transform="translate(0,14) scale(0.7)">
+        <svg xmlns="http://www.w3.org/2000/svg" overflow="hidden" height={30}>
+            <g transform="translate(0,14) scale(0.8)">
                 <text
                     fill={colorScheme === 'dark' ? '#f0f0f0' : '#000'}
                     fontFamily="Impact,Impact_MSFontService,sans-serif"

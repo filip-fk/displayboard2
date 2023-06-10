@@ -30,7 +30,7 @@ export function User() {
       >
         <Group>
           <Avatar
-            src="../assets/generic-avatar.jpg"
+            //src="../assets/generic-avatar.jpg"
             radius="xl"
           />
           <Box sx={{ flex: 1 }}>
