@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-    IconGitPullRequest,
-    IconAlertCircle,
-    IconMessages,
-    IconDatabase,
     IconCalendar,
     IconHome,
     IconTrain,
     IconDiamond,
 } from '@tabler/icons-react';
-import { ThemeIcon, UnstyledButton, Group, Text, Button, NavLink, Box } from '@mantine/core';
+import { ThemeIcon, Text, NavLink, Box } from '@mantine/core';
 
 // interface MainLinkProps {
 //     icon: React.ReactNode;

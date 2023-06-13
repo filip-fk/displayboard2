@@ -1,26 +1,20 @@
 import { useEffect, useState } from 'react';
 import {
   AppShell,
-  Navbar,
-  Header,
-  Grid,
-  Footer,
-  Aside,
-  Text,
-  MediaQuery,
   Burger,
-  useMantineTheme,
-  useMantineColorScheme,
-  MantineProvider, ColorSchemeProvider, ColorScheme,
-  Group,
-  ActionIcon,
-  Box,
-  ScrollArea,
   Button,
-  Stack,
+  ColorScheme,
+  ColorSchemeProvider,
+  Grid,
+  Group,
+  Header,
+  MantineProvider, 
+  MediaQuery,
+  Navbar,
+  Text,
+  useMantineTheme,
 } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
-import { useColorScheme, useFullscreen } from '@mantine/hooks';
+import { useFullscreen } from '@mantine/hooks'; //useColorScheme
 
 
 
@@ -66,10 +60,10 @@ function App() {
   // )
 
   //color mngmt
-  const colorScheme_ = useColorScheme();
-  const [colorScheme, setColorScheme] = useState<ColorScheme>(colorScheme_);
+  //const colorScheme_ = useColorScheme();
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme_ === 'dark' ? 'light' : 'dark'));
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   const theme = useMantineTheme();
 
@@ -77,7 +71,7 @@ function App() {
   const [opened, setOpened] = useState(false);
 
   //fullscren
-  const { ref, toggle, fullscreen } = useFullscreen();
+  const { toggle, fullscreen } = useFullscreen(); //add ref for specific element then ex usage <group ... ref={ref}/>
 
   //time
   const [now_, setNow_] = useState(new Date());
@@ -91,13 +85,13 @@ function App() {
   }, [])
 
   return (
-    <ColorSchemeProvider colorScheme={colorScheme_} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={{ colorScheme: colorScheme_ }} withGlobalStyles withNormalizeCSS>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme: colorScheme }} withGlobalStyles withNormalizeCSS>
         <AppShell
           styles={{
             root: {
-              backgroundColor: colorScheme_ === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-              color: colorScheme_ === 'dark' ? theme.colors.gray[1] : theme.colors.dark[8],
+              backgroundColor: colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+              color: colorScheme === 'dark' ? theme.colors.gray[1] : theme.colors.dark[8],
             },
           }}
           navbarOffsetBreakpoint="sm"
@@ -145,7 +139,7 @@ function App() {
                   </MediaQuery>
 
                   <Group sx={{ height: '100%' }} px={0} position="apart">
-                    <Logo colorScheme={colorScheme_} />
+                    <Logo colorScheme={colorScheme} />
                     {/* <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
                     {colorScheme_ === 'dark' ? <IconSun size="1rem" /> : <IconMoonStars size="1rem" />}
                   </ActionIcon> */}

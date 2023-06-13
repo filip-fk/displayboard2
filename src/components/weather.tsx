@@ -3,22 +3,22 @@ import { useEffect, useState } from "react"
 
 function Weather() {
     //vars & func
-    function api<T>(url: string): Promise<T> {
-        return fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                return response.json().then(data => data as T);
-            })
-    }
+    // function api<T>(url: string): Promise<T> {
+    //     return fetch(url)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error(response.statusText)
+    //             }
+    //             return response.json().then(data => data as T);
+    //         })
+    // }
 
     //get version
     const [curr_temp, setTemp] = useState(100)
 
     //runs only on first render
     useEffect(() => {
-        
+        setTemp(10)
     }, []);
 
     //runs periodically every 50seconds (not on first render)

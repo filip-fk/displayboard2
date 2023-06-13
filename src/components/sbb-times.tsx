@@ -1,25 +1,13 @@
 import { useEffect, useState } from 'react';
 import {
-  ActionIcon,
   Badge,
-  Button,
-  Image,
-  Text,
-  MantineProvider,
-  ColorSchemeProvider,
-  ColorScheme,
-  AppShell,
-  Navbar,
-  Header,
   Card,
   Group,
-  useMantineTheme,
+  ScrollArea,
   Stack,
-  ScrollArea
+  Text,
 } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
 import { useColorScheme } from '@mantine/hooks';
-import { resourceLimits } from 'worker_threads';
 
 function badge_text(time_delay: number, time_in: number): { txt: string, c: string } {
   if (time_delay < 1 && time_in > 3)
@@ -125,7 +113,7 @@ function fetch_data(dep: { rtTime: any; time: any; direction: any; name: any; } 
 function SBB() {
   //color mngmt
   const colorScheme = useColorScheme();
-  const theme = useMantineTheme();
+  //const theme = useMantineTheme();
 
   //data collection
   const [data, setData] = useState([{ color: {b:'red',f:'dark.9'}, bus: 0, dir: 'fail1', time_dep: '--:--', time_in: 0, time_delay: 0 }]);
